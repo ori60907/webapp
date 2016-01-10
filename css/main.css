@@ -1,0 +1,206 @@
+html{
+    font-size:62.5%;
+    color:rgb(34, 34, 34);
+    font-family:'Open Sans' ,sans-serif ;
+}
+a {
+    text-decoration: none;
+    color:rgb(34, 34, 34);
+}
+
+    a:hover {
+        text-decoration: none;
+        color:rgb(34, 34, 34);
+    }
+
+    a:visited {
+        text-decoration: none;
+    }
+/*==========================
+       Header
+============================*/
+body{
+    margin-left:0px;
+    margin-right:0px;
+    margin-top:0px;
+}
+header{
+    height:7rem;
+    width:100%;
+    background-color:black;
+    margin-left:0px;
+    margin-right:0px;
+    margin-top:0px;
+    margin-bottom:0px;
+}
+.layout-wrap{
+    width:100%;
+    max-width:1000px;
+    margin:0 auto;
+}
+.layout-wrap img{
+    margin-top:2rem;
+    float:left;
+    margin-left:1.5rem;
+}
+.search-box{
+    margin-top:2.5rem;
+    margin-right:1.5rem;
+    float:right;
+}
+body{
+    background-image: url("../img/body-background.jpg");
+    background-repeat:no-repeat;
+    background-attachment:fixed;
+    background-size:auto 100%;
+}
+.page-body{
+    margin-top:0px;
+    background-color:rgb(102, 102, 102);
+    padding-top:2rem;
+}
+.notifications{
+    background-color:rgb(211, 211, 211);
+    width:auto;
+    max-width:960px;
+    margin-top:0rem;
+    height:3rem;
+    padding-left:20px;
+    padding-top:1rem;
+    font-size:1.5rem;
+    padding-right:20px;
+    margin-left:20px;
+    margin-right:20px;
+
+}
+nav{
+    width:auto;
+    max-width:960px;
+    margin-top:2rem;
+    margin-left:20px;
+    margin-right:20px;
+    height:15rem;
+}
+.nav-section{
+    background-color:black;
+    height:100%;
+    margin-right:5%;
+    width:30%;
+    background-repeat:no-repeat;
+    background-size:12rem auto;
+    background-position-x:50%;
+    background-position-y:7rem;
+    float:left;
+    position:relative;
+    -webkit-transition: background-color 0.3s; /* Safari */
+    transition: background-color 0.3s;
+    
+}
+.nav-section:nth-child(1){
+    background-image:url("../img/icons/action-report-new.png");
+}
+.nav-section:nth-child(2){
+    background-image:url("../img/icons/action-report-top.png");
+}
+.nav-section:nth-child(3){
+    background-image:url("../img/icons/actions-help.png");
+    margin-right:0px;
+}
+.nav-section>p{
+    width:auto;
+    text-align:center;
+    color:white;
+    font-size:1.5rem;
+    margin-left:1rem;
+    margin-right:1rem;
+    
+    display:block;
+}
+.menu-arrow{
+    position:absolute;
+    top:1.4rem;
+    right:2rem;
+    width:1.5rem;
+}
+.menu-arrow img{
+    margin-top:0px;
+    margin-left:0px;
+    width:100%;
+    transition: 0.2s linear all;
+    
+    -webkit-transform-origin: 50% 50%;
+    -moz-transform-origin: 50% 50%;
+    -ms-transform-origin: 50% 50%;
+    -o-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+}
+.menu{
+    position:absolute;
+    width:100%;
+    top:12rem;
+    background-color:red;
+    height:3.5rem;
+    box-shadow:none;
+}
+.menu-caption{
+    width:100%;
+    background-color:rgb(211, 211, 211);
+    height:3.5rem;
+    position:relative;
+}
+.menu-caption>p{
+    margin-bottom:0px;
+    padding-top:0.7rem;
+    margin-top:0px;
+    color:rgb(34, 34, 34);
+    font-size:1.4rem;
+    margin-right:1.5rem;
+    margin-left:1.5rem;
+
+}
+.action-list{
+    width:100%;
+    background-color:white;
+    padding-left:0px;
+    margin-top:0px;
+    margin-bottom:0px;
+    list-style:none;
+    height:auto;
+    max-height:0rem;
+    overflow:hidden;
+   -webkit-transition: max-height 0,5s; /* Safari */
+    transition: max-height 0.3s;
+    box-shadow:5px 5px 5px hsla(0, 0%, 29%, 0.6);   
+}
+.action-list>li{
+    width:auto;
+    margin-left:2rem;
+    margin-right:2rem;
+    border-bottom: 1px solid rgb(211, 211, 211);
+    padding-top:1rem;
+    padding-bottom:1rem;
+}
+.action-list>li>a{
+    color:rgb(34, 34, 34);
+    font-size:1.6rem;
+    width:100%;
+    display:block;
+    
+}
+.nav-section:hover .action-list{
+    max-height:30rem;
+}
+.nav-section:hover{
+    background-color: rgb(40,40,40);
+    
+}
+.nav-section:hover >.menu{
+    box-shadow:5px 5px 5px hsla(0, 0%, 29%, 0.6);   
+}
+.nav-section:hover >.menu>.menu-caption>.menu-arrow img{
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    transform: rotate(180deg);
+}
