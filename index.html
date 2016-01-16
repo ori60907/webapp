@@ -1,185 +1,238 @@
 ﻿<!doctype html>
 <html class="no-js" lang="">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>WebApp</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>WebApp</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <!-- Place favicon.ico in the root directory -->
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/main.css">
+    <script src="js/vendor/modernizr-2.8.3.min.js"></script>
+</head>
+<body>
+    <!--[if lt IE 8]>
+        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+    <header>
+        <div class="layout-wrap">
+            <a href="#"><img src="img/logo-netcraft.svg" alt="netcraft"></a>
 
-        <link rel="apple-touch-icon" href="apple-touch-icon.png">
-        <!-- Place favicon.ico in the root directory -->
+            <form class="search-box">
+                <input type="search" name="q" placeholder="search">
+            </form>
+        </div>
+    </header>
 
-        <link rel="stylesheet" href="css/normalize.css">
-        <link rel="stylesheet" href="css/main.css">
-        <script src="js/vendor/modernizr-2.8.3.min.js"></script>
-    </head>
-    <body>
-        <!--[if lt IE 8]>
-            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
+    <section class="page-body layout-wrap">
+        <div id="notification" class="invisibleSection">blah</div>
 
-        <header>
-            <div class="layout-wrap">
-                <a href="#"><img src="img/logo-netcraft.svg" alt="netcraft"></a>
+        <nav>
+            <div class="nav-section">
+                <p>Select Reporting Platform</p>
 
-                <form class="search-box">
-                    <input type="search" name="q" placeholder="search">
-                </form>
+                <div class="menu">
+                    <div class="menu-caption">
+                        <p>Choose QS report</p>
+                        <div class="menu-arrow">
+                            <div class="blackArrow"></div>
+                        </div>
+                    </div>
+
+                    <ul class="action-list">
+                        <li><a href="#">link</a></li>
+                        <li><a href="#">link</a></li>
+                        <li><a href="#">link</a></li>
+                        <li><a href="#">link</a></li>
+                        <li><a href="#">link</a></li>
+                    </ul>
+                </div>
             </div>
-        </header>
 
-        <section class="page-body layout-wrap">
-            <div class="notifications">blah</div>
+            <div class="nav-section">
+                <p>Select Dashboard</p>
 
-            <nav>
-                <div class="nav-section">
-                    <p>Select Reporting Platform</p>
+                <div class="menu">
+                    <div class="menu-caption">
+                        <p>Choose dashboard</p>
+                        <div class="menu-arrow">
+                            <div class="blackArrow"></div>
+                        </div>
+                    </div>
 
-                    <div class="menu">
-                        <div class="menu-caption">
-                            <p>Choose QS report</p>
-                            <div class="menu-arrow">
-                                <div class="blackArrow"></div>
+                    <ul class="action-list">
+                        <li><a href="#">link</a></li>
+                        <li><a href="#">link</a></li>
+                        <li><a href="#">link</a></li>
+                        <li><a href="#">link</a></li>
+                        <li><a href="#">link</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="nav-section">
+                <p>Help &amp; Tutorials</p>
+
+                <div class="menu">
+                    <div class="menu-caption">
+                        <p>Choose guide</p>
+                        <div class="menu-arrow">
+                            <div class="blackArrow"></div>
+                        </div>
+                    </div>
+
+                    <ul class="action-list">
+                        <li><a href="#">link</a></li>
+                        <li><a href="#">link</a></li>
+                        <li><a href="#">link</a></li>
+                        <li><a href="#">link</a></li>
+                        <li><a href="#">link</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <section class="tabs">
+            <ul>
+                <li class="tab"><a href="#quick-reports" id="QR"><span class="icon-external-link"></span> Quick Reports</a></li>
+                <li class="tab"><a href="#my-folders"><span class="icon-star-o"></span>My Folders</a></li>
+                <li class="tab"><a href="#my-team-folders"><span class=" icon-folder-open-o"></span>My Team Folders</a></li>
+                <li class="tab"><a href="#public-folders"><span class="icon-copy"></span>Public Folders</a></li>
+            </ul>
+
+            <div id="quick-reports-panel" class="tabSection">
+                <div class="settings-bar">
+                    <select>
+                        <option>Ynet</option>
+                    </select>
+                    <input type="checkbox" id="settings-checkbox" />
+                    <label class="settingsBtn" for="settings-checkbox"></label>
+                    <div class="expandBtn"></div>
+
+                    <div class="reports-tab">
+                        <div class="report-div">
+                            <h5>Report1:</h5>
+                            <div class="site-name">
+                                <label>Name</label>
+                                <input type="text" class="textInput" id="siteName1" />
+                            </div>
+                            <div class="site-url">
+                                <label>URL</label>
+                                <input type="text" class="textInput" id="siteUrl1" />
+                            </div>
+                        </div>
+                        <div class="report-div">
+                            <h5>Report2:</h5>
+                            <div class="site-name">
+                                <label>Name</label>
+                                <input type="text" class="textInput" id="siteName2" />
+                            </div>
+                            <div class="site-url">
+                                <label>URL</label>
+                                <input type="text" class="textInput" id="siteUrl2" />
+                            </div>
+                        </div>
+                        <div class="report-div">
+                            <h5>Report3:</h5>
+                            <div class="site-name">
+                                <label>Name</label>
+                                <input type="text" class="textInput" id="siteName3" />
+                            </div>
+                            <div class="site-url">
+                                <label>URL</label>
+                                <input type="text" class="textInput" id="siteUrl3" />
                             </div>
                         </div>
 
-                        <ul class="action-list">
-                            <li><a href="#">link</a></li>
-                            <li><a href="#">link</a></li>
-                            <li><a href="#">link</a></li>
-                            <li><a href="#">link</a></li>
-                            <li><a href="#">link</a></li>
-                        </ul>
+                        <a href="#"><div class="saveBtn">save</div></a>
+                        <a href="#"><div class="cancleBtn">cancle</div></a>
                     </div>
                 </div>
+                <iframe></iframe>
+            </div>
 
-                <div class="nav-section">
-                    <p>Select Dashboard</p>
+            <div id="my-folders-panel" class="invisibleSection">
+                <div class="settings-bar">
+                    <div class="expandBtn"></div>
+                </div>
+                <iframe></iframe>
+            </div>
 
-                    <div class="menu">
-                        <div class="menu-caption">
-                            <p>Choose dashboard</p>
-                            <div class="menu-arrow">
-                                <div class="blackArrow"></div>
+            <div id="my-team-folders-panel" class="invisibleSection">
+                <div class="settings-bar">
+                    <select>
+                        <option>Ynet</option>
+                    </select>
+                    <input type="checkbox" id="settings-checkbox" />
+                    <label class="settingsBtn" for="settings-checkbox"></label>
+                    <div class="expandBtn"></div>
+
+                    <div class="reports-tab">
+                        <div class="report-div">
+                            <h5>Report1:</h5>
+                            <div class="site-name">
+                                <label>Name</label>
+                                <input type="text" class="textInput" id="siteName1" />
+                            </div>
+                            <div class="site-url">
+                                <label>URL</label>
+                                <input type="text" class="textInput" id="siteUrl1" />
+                            </div>
+                        </div>
+                        <div class="report-div">
+                            <h5>Report2:</h5>
+                            <div class="site-name">
+                                <label>Name</label>
+                                <input type="text" class="textInput" id="siteName2" />
+                            </div>
+                            <div class="site-url">
+                                <label>URL</label>
+                                <input type="text" class="textInput" id="siteUrl2" />
+                            </div>
+                        </div>
+                        <div class="report-div">
+                            <h5>Report3:</h5>
+                            <div class="site-name">
+                                <label>Name</label>
+                                <input type="text" class="textInput" id="siteName3" />
+                            </div>
+                            <div class="site-url">
+                                <label>URL</label>
+                                <input type="text" class="textInput" id="siteUrl3" />
                             </div>
                         </div>
 
-                        <ul class="action-list">
-                            <li><a href="#">link</a></li>
-                            <li><a href="#">link</a></li>
-                            <li><a href="#">link</a></li>
-                            <li><a href="#">link</a></li>
-                            <li><a href="#">link</a></li>
-                        </ul>
+                        <a href="#"><div class="saveBtn">save</div></a>
+                        <a href="#"><div class="cancleBtn">cancle</div></a>
                     </div>
                 </div>
+                <iframe></iframe>
+            </div>
 
-                <div class="nav-section">
-                    <p>Help &amp; Tutorials</p>
-
-                    <div class="menu">
-                        <div class="menu-caption">
-                            <p>Choose guide</p>
-                            <div class="menu-arrow">
-                                <div class="blackArrow"></div>
-                            </div>
-                        </div>
-
-                        <ul class="action-list">
-                            <li><a href="#">link</a></li>
-                            <li><a href="#">link</a></li>
-                            <li><a href="#">link</a></li>
-                            <li><a href="#">link</a></li>
-                            <li><a href="#">link</a></li>
-                        </ul>
-                    </div>
+            <div id="public-folders-panel" class="invisibleSection">
+                <div class="settings-bar">
+                    <div class="expandBtn"></div>
                 </div>
-            </nav>
-
-            <section class="tabs">
-                <ul>
-                    <li><a href="#quick-reports"><span class="icon-external-link"></span> Quick Reports</a></li>
-                    <li><a href="#my-folders"><span class="icon-star-o"></span>My Folders</a></li>
-                    <li><a href="#my-team-folders"><span class=" icon-folder-open-o"></span>My Team Folders</a></li>
-                    <li><a href="#public-folders"><span class="icon-copy"></span>Public Folders</a></li>
-                </ul>
-
-                <div id="quick-reports">
-                    <div class="settings-bar">
-                        <select>
-                            <option>Ynet</option>
-                        </select>
-                        <input type="checkbox" id="settings-checkbox" />
-                        <label class="settingsBtn" for="settings-checkbox"></label>
-                        <div class="expandBtn"></div>
-
-                        <div class="reports-tab">
-                            <div class="report-div">
-                                <h5>Report1:</h5>
-                                <div class="site-name">
-                                    <label>Name</label>
-                                    <input type="text" class="textInput" id="siteName1" />
-                                </div>
-                                <div class="site-url">
-                                    <label>URL</label>
-                                    <input type="text" class="textInput" id="siteUrl1" />
-                                </div>
-                            </div>
-                            <div class="report-div">
-                                <h5>Report2:</h5>
-                                <div class="site-name">
-                                    <label>Name</label>
-                                    <input type="text" class="textInput" id="siteName2" />
-                                </div>
-                                <div class="site-url">
-                                    <label>URL</label>
-                                    <input type="text" class="textInput" id="siteUrl2" />
-                                </div>
-                            </div>
-                            <div class="report-div">
-                                <h5>Report3:</h5>
-                                <div class="site-name">
-                                    <label>Name</label>
-                                    <input type="text" class="textInput" id="siteName3" />
-                                </div>
-                                <div class="site-url">
-                                    <label>URL</label>
-                                    <input type="text" class="textInput" id="siteUrl3" />
-                                </div>
-                            </div>
-
-                            <a href="#"><div class="saveBtn">save</div></a>
-                            <a href="#"><div class="cancleBtn">cancle</div></a>
-                        </div>
-                    </div>
-                    <iframe></iframe>
-                </div>
-
-                <div id="my-folders">
-                </div>
-
-                <div id="my-team-folders">
-                </div>
-
-                <div id="public-folders">
-                </div>
-            </section>
+                <iframe src="http://www.walla.co.il"></iframe>
+            </div>
         </section>
-
-        <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
-        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.12.0.min.js"><\/script>')</script>
-        <script src="js/plugins.js"></script>
-        <script src="js/main.js"></script>
-
-        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
-        <script>
-            (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
-            function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
-            e=o.createElement(i);r=o.getElementsByTagName(i)[0];
-            e.src='https://www.google-analytics.com/analytics.js';
-            r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-            ga('create','UA-XXXXX-X','auto');ga('send','pageview');
-        </script>
-    </body>
+    </section>
+    <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.12.0.min.js"><\/script>')</script>
+    <script src="js/plugins.js"></script>
+    <script src="js/main.js"></script>
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+    <script>
+        (function (b, o, i, l, e, r) {
+            b.GoogleAnalyticsObject = l; b[l] || (b[l] =
+            function () { (b[l].q = b[l].q || []).push(arguments) }); b[l].l = +new Date;
+            e = o.createElement(i); r = o.getElementsByTagName(i)[0];
+            e.src = 'https://www.google-analytics.com/analytics.js';
+            r.parentNode.insertBefore(e, r)
+        }(window, document, 'script', 'ga'));
+        ga('create', 'UA-XXXXX-X', 'auto'); ga('send', 'pageview');
+    </script>
+</body>
 </html>
