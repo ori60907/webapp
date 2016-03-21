@@ -417,7 +417,7 @@ nav{
     display:block;
 }
 
-#settings-checkbox{
+#settings-checkbox, #TFsettings-checkbox {
     display:none;
 }
 .settings-bar{
@@ -459,6 +459,9 @@ nav{
 #settings-checkbox:checked ~.settingsBtn{
     background-color:white;
 }
+#TFsettings-checkbox:checked ~.settingsBtn{
+    background-color:white;
+}
 .reports-tab{
     width:100%;
     position:absolute;
@@ -473,6 +476,9 @@ nav{
 
 }
 #settings-checkbox:checked ~.reports-tab{
+    max-height:30rem;
+}
+#TFsettings-checkbox:checked ~.reports-tab{
     max-height:30rem;
 }
 .report-div{
@@ -595,6 +601,7 @@ nav{
     font-size:1.6rem;
     background-color:black;
     margin-bottom:1.3rem;
+    cursor:pointer;
 }
 .cancleBtn{
     float:right;

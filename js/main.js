@@ -102,33 +102,33 @@ xhr.send(null);*/
 ========================*/
 updateDropDowns();
 updateForm();
-
+TFupdateDropDowns();
+TFupdateForm();
 
 /*======================
     settings button script
 ========================*/
 
-document.querySelector('.settingsBtn').addEventListener("click", settingsBtnClick,false);
-
+//document.querySelector('.settingsBtn').addEventListener("click", settingsBtnClick,false);
+UTILS.addEvent(document.querySelectorAll('.settingsBtn')[0], "click", settingsBtnClick);
+UTILS.addEvent(document.querySelectorAll('.settingsBtn')[1], "click", settingsBtnClick);
 function settingsBtnClick() {
-    document.querySelector('#siteName1').focus();
+    var tabId= this.parentNode.parentNode.id;
+    if (tabId == "my-team-folders-panel") {
+        document.querySelector('#TFsiteName1').focus();
+    }
+    else {
+       document.querySelector('#siteName1').focus();
+    }
+    
 }
 
 /*======================
     save button script
 ========================*/
 
-document.querySelector('#saveBtn1').addEventListener("click", saveBtnClick, false);
-
-
-function validateUrl(url) {
-
-    var urlPattern = new RegExp("(http|https)://[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:/~+#-]*[\w@?^=%&amp;/~+#-])?");
-    if (!urlPattern.test(url)) {
-        return false;
-    }
-    return true;
-}
+//document.querySelector('#saveBtn1').addEventListener("click", saveBtnClick, false);
+UTILS.addEvent(document.querySelector('#saveBtn1'), "click", saveBtnClick);
 
 function saveBtnClick() {
     var siteName1 = document.querySelector('#siteName1');
@@ -137,147 +137,121 @@ function saveBtnClick() {
     var siteUrl2 = document.querySelector('#siteUrl2');
     var siteName3 = document.querySelector('#siteName3');
     var siteUrl3 = document.querySelector('#siteUrl3');
-    var errorElemnt = null;
+    var errorElemnt = {errElmnt: null };
     var reportIsValid = true;
     var jsonObj = { quickReports: [] };
     clearErrors();
     //check first report
-    if (siteName1.value!="" || siteUrl1.value!="")
-    {
-        if (siteName1.value == "") {
-            errorElemnt = siteName1;
-            siteName1.className = "textInput textInputError";
-            reportIsValid = false;
-        }
-        else {
-            siteName1.className = "textInput";
-        }
-        if (validateUrl(siteUrl1.value) == false) {
-            siteUrl1.className = "textInput textInputError";
-            if (errorElemnt == null)
-                errorElemnt = siteUrl1;
-            reportIsValid = false;
-        }
-        else {
-            siteUrl1.className = "textInput";
-        }
-        if (reportIsValid)
-            jsonObj.quickReports.push({ "Name": siteName1.value, "Url": siteUrl1.value });
-    }
+    if (UTILS.checkReport(siteName1, siteUrl1, errorElemnt))
+        jsonObj.quickReports.push({ "Name": siteName1.value, "Url": siteUrl1.value });
 
     //check second report
-    
-    reportIsValid = true;
-    if (siteName2.value != "" || siteUrl2.value != "") {
-        if (siteName2.value == "") {
-            if (errorElemnt==null)
-                errorElemnt = siteName2;
-            siteName2.className = "textInput textInputError";
-            reportIsValid = false;
-        }
-        else {
-            siteName2.className = "textInput";
-        }
-        if (validateUrl(siteUrl2.value) == false) {
-            siteUrl2.className = "textInput textInputError";
-            if (errorElemnt == null)
-                errorElemnt = siteUrl2;
-            reportIsValid = false;
-        }
-        else {
-            siteUrl2.className = "textInput";
-        }
-        if (reportIsValid)
-            jsonObj.quickReports.push({ "Name": siteName2.value, "Url": siteUrl2.value });
-    }
+    if (UTILS.checkReport(siteName2, siteUrl2, errorElemnt))
+        jsonObj.quickReports.push({ "Name": siteName2.value, "Url": siteUrl2.value });
 
     //check third report
+    if (UTILS.checkReport(siteName3, siteUrl3, errorElemnt))
+        jsonObj.quickReports.push({ "Name": siteName3.value, "Url": siteUrl3.value });
 
-    reportIsValid = true;
-    if (siteName3.value != "" || siteUrl3.value != "") {
-        if (siteName3.value == "") {
-            if (errorElemnt == null)
-                errorElemnt = siteName3;
-            siteName3.className = "textInput textInputError";
-            reportIsValid = false;
-        }
-        else {
-            siteName3.className = "textInput";
-        }
-        if (validateUrl(siteUrl3.value) == false) {
-            siteUrl3.className = "textInput textInputError";
-            if (errorElemnt == null)
-                errorElemnt = siteUrl3;
-            reportIsValid = false;
-        }
-        else {
-            siteUrl3.className = "textInput";
-        }
-        if (reportIsValid)
-            jsonObj.quickReports.push({ "Name": siteName2.value, "Url": siteUrl3.value });
-    }
-    if (errorElemnt != null){
-        errorElemnt.focus();
-        (errorElemnt.nextElementSibling).hidden = false;
+    if (errorElemnt.errElmnt!=null) {
+        errorElemnt.errElmnt.focus();
+        (errorElemnt.errElmnt.nextElementSibling).hidden = false;
     }
     else {
         //save the data in localstorage
         localStorage.setItem('JsonData', JSON.stringify(jsonObj));
         document.querySelector('#settings-checkbox').checked = false;
         updateDropDowns();
+        updateForm();
+    }
+}
+//for the TF
+UTILS.addEvent(document.querySelector('#TFsaveBtn1'), "click", tfSaveBtnClick);
+
+function tfSaveBtnClick() {
+    var siteName1 = document.querySelector('#TFsiteName1');
+    var siteUrl1 = document.querySelector('#TFsiteUrl1');
+    var siteName2 = document.querySelector('#TFsiteName2');
+    var siteUrl2 = document.querySelector('#TFsiteUrl2');
+    var siteName3 = document.querySelector('#TFsiteName3');
+    var siteUrl3 = document.querySelector('#TFsiteUrl3');
+    var errorElemnt = { errElmnt: null };
+    var reportIsValid = true;
+    var jsonObj = { teamFolders: [] };
+    clearErrors();
+    //check first report
+    if (UTILS.checkReport(siteName1, siteUrl1, errorElemnt))
+        jsonObj.teamFolders.push({ "Name": siteName1.value, "Url": siteUrl1.value });
+
+    //check second report
+    if (UTILS.checkReport(siteName2, siteUrl2, errorElemnt))
+        jsonObj.teamFolders.push({ "Name": siteName2.value, "Url": siteUrl2.value });
+
+    //check third report
+    if (UTILS.checkReport(siteName3, siteUrl3, errorElemnt))
+        jsonObj.teamFolders.push({ "Name": siteName3.value, "Url": siteUrl3.value });
+
+    if (errorElemnt.errElmnt != null) {
+        errorElemnt.errElmnt.focus();
+        (errorElemnt.errElmnt.nextElementSibling).hidden = false;
+    }
+    else {
+        //save the data in localstorage
+        localStorage.setItem('TFJsonData', JSON.stringify(jsonObj));
+        document.querySelector('#TFsettings-checkbox').checked = false;
+        TFupdateDropDowns();
+        TFupdateForm();
+    }
+}
+//check validity while typing
+document.querySelector("#siteName1").addEventListener("input", validateSiteName, false);
+document.querySelector("#siteName2").addEventListener("input", validateSiteName, false);
+document.querySelector("#siteName3").addEventListener("input", validateSiteName, false);
+document.querySelector("#TFsiteName1").addEventListener("input", validateSiteName, false);
+document.querySelector("#TFsiteName2").addEventListener("input", validateSiteName, false);
+document.querySelector("#TFsiteName3").addEventListener("input", validateSiteName, false);
+function validateSiteName() {
+    if (this.value != "") {
+        this.className = "textInput";
+        this.nextElementSibling.hidden = true;
+    }
+}
+document.querySelector("#siteUrl1").addEventListener("input", validateSiteUrl, false);
+document.querySelector("#siteUrl2").addEventListener("input", validateSiteUrl, false);
+document.querySelector("#siteUrl3").addEventListener("input", validateSiteUrl, false);
+document.querySelector("#TFsiteUrl1").addEventListener("input", validateSiteUrl, false);
+document.querySelector("#TFsiteUrl2").addEventListener("input", validateSiteUrl, false);
+document.querySelector("#TFsiteUrl3").addEventListener("input", validateSiteUrl, false);
+function validateSiteUrl() {
+    if (UTILS.validateUrl(this.value)) {
+        this.className = "textInput";
+        this.nextElementSibling.hidden = true;
     }
 }
 
-document.querySelector("#siteName1").addEventListener("input", function () {
-    if (document.querySelector("#siteName1").value != "") {
-        document.querySelector("#siteName1").className = "textInput";
-        document.querySelector("#siteName1").nextElementSibling.hidden = true;
-    }
-}, false);
-document.querySelector("#siteUrl1").addEventListener("input", function () {
-    if (validateUrl(document.querySelector("#siteUrl1").value)) {
-        document.querySelector("#siteUrl1").className = "textInput";
-        document.querySelector("#siteUrl1").nextElementSibling.hidden = true;
-    }
-}, false);
-document.querySelector("#siteName2").addEventListener("input", function () {
-    if (document.querySelector("#siteName2").value != "") {
-        document.querySelector("#siteName2").className = "textInput";
-        document.querySelector("#siteName2").nextElementSibling.hidden = true;
-    }
-}, false);
-document.querySelector("#siteUrl2").addEventListener("input", function () {
-    if (validateUrl(document.querySelector("#siteUrl2").value)) {
-        document.querySelector("#siteUrl2").className = "textInput";
-        document.querySelector("#siteUrl2").nextElementSibling.hidden = true;
-    }
-}, false);
-document.querySelector("#siteName3").addEventListener("input", function () {
-    if (document.querySelector("#siteName3").value != "") {
-        document.querySelector("#siteName3").className = "textInput";
-        document.querySelector("#siteName3").nextElementSibling.hidden = true;
-    }
-}, false);
-document.querySelector("#siteUrl3").addEventListener("input", function () {
-    if (validateUrl(document.querySelector("#siteUrl3").value)) {
-        document.querySelector("#siteUrl3").className = "textInput";
-        document.querySelector("#siteUrl3").nextElementSibling.hidden = true;
-    }
-}, false);
+
+
+
 
 function clearErrors() {
-    document.querySelector("#siteName1").className = "textInput";
-    document.querySelector("#siteName1").nextElementSibling.hidden = true;
-    document.querySelector("#siteUrl1").className = "textInput";
-    document.querySelector("#siteUrl1").nextElementSibling.hidden = true;
-    document.querySelector("#siteName2").className = "textInput";
-    document.querySelector("#siteName2").nextElementSibling.hidden = true;
-    document.querySelector("#siteUrl2").className = "textInput";
-    document.querySelector("#siteUrl2").nextElementSibling.hidden = true;
-    document.querySelector("#siteName3").className = "textInput";
-    document.querySelector("#siteName3").nextElementSibling.hidden = true;
-    document.querySelector("#siteUrl3").className = "textInput";
-    document.querySelector("#siteUrl3").nextElementSibling.hidden = true;
+    clearInputError("#siteName1");
+    clearInputError("#siteUrl1");
+    clearInputError("#siteName2");
+    clearInputError("#siteUrl2");
+    clearInputError("#siteName3");
+    clearInputError("#siteUrl3");
+    //for tf
+    clearInputError("#TFsiteName1");
+    clearInputError("#TFsiteUrl1");
+    clearInputError("#TFsiteName2");
+    clearInputError("#TFsiteUrl2");
+    clearInputError("#TFsiteName3");
+    clearInputError("#TFsiteUrl3");
+
+}
+function clearInputError(elemntId) {
+    document.querySelector(elemntId).className = "textInput";
+    document.querySelector(elemntId).nextElementSibling.hidden = true;
 }
 
 
@@ -303,50 +277,175 @@ function updateDropDowns() {
             document.querySelector('#siteName' + (i+1)).value = quickReports[i].Name;
             document.querySelector('#siteUrl' + (i + 1)).value = quickReports[i].Url;
         }
+        quickReportsSelect.selectedIndex = quickReportsSelect.length-1;
         updateQRIframe();
     }
 }
+
+//for TF
+function TFupdateDropDowns() {
+    if (localStorage.getItem('TFJsonData') != null) {
+        var jsonObj = JSON.parse(localStorage.getItem('TFJsonData'));
+        var teamFolders = jsonObj.teamFolders;
+        var teamFoldersSelect = document.querySelector('#my-team-folders-panel select');
+        var length = teamFoldersSelect.length;
+        for (var i = 0; i < length; i++) {
+            teamFoldersSelect.remove(0);
+        }
+        for (var i = 0; i < teamFolders.length; i++) {
+            var option = document.createElement("option");
+            option.text = teamFolders[i].Name;
+            option.value = teamFolders[i].Url;
+            teamFoldersSelect.add(option);
+            //update the form
+            document.querySelector('#TFsiteName' + (i + 1)).value = teamFolders[i].Name;
+            document.querySelector('#TFsiteUrl' + (i + 1)).value = teamFolders[i].Url;
+        }
+        teamFoldersSelect.selectedIndex = teamFoldersSelect.length - 1;
+        updateTFIframe();
+    }
+}
+
 function updateForm() {
     if (localStorage.getItem('JsonData') != null) {
         var jsonObj = JSON.parse(localStorage.getItem('JsonData'));
         var quickReports = jsonObj.quickReports;
+        for (var i = 0; i < 3; i++) {
+            document.querySelector('#siteName' + (i + 1)).value = "";
+            document.querySelector('#siteUrl' + (i + 1)).value = "";
+        }
         for (var i = 0; i < quickReports.length; i++) {
             document.querySelector('#siteName' + (i + 1)).value = quickReports[i].Name;
             document.querySelector('#siteUrl' + (i + 1)).value = quickReports[i].Url;
         }
     }
 }
+
+//for TF
+function TFupdateForm() {
+    if (localStorage.getItem('TFJsonData') != null) {
+        var jsonObj = JSON.parse(localStorage.getItem('TFJsonData'));
+        var teamFolders = jsonObj.teamFolders;
+        for (var i = 0; i < 3; i++) {
+            document.querySelector('#TFsiteName' + (i + 1)).value = "";
+            document.querySelector('#TFsiteUrl' + (i + 1)).value = "";
+        }
+        for (var i = 0; i < teamFolders.length; i++) {
+            document.querySelector('#TFsiteName' + (i + 1)).value = teamFolders[i].Name;
+            document.querySelector('#TFsiteUrl' + (i + 1)).value = teamFolders[i].Url;
+        }
+    }
+}
+
 /*======================
     update iframe script
 ========================*/
 
-document.querySelector("#quick-reports-panel select").addEventListener("change", updateQRIframe, false);
-
+UTILS.addEvent(document.querySelector("#quick-reports-panel select"), "change", updateQRIframe);
 function updateQRIframe() {
-    if (document.querySelector("#quick-reports-panel select").value != null && document.querySelector("#quick-reports-panel select").value != "") {
-        document.querySelector("#quick-reports-panel>iframe").src = document.querySelector("#quick-reports-panel select").value;
-        document.querySelector("#quick-reports-panel>iframe").hidden = false;
+    var iframe = document.querySelector("#quick-reports-panel>iframe");
+    var select = document.querySelector("#quick-reports-panel select");
+    if (select.value != null && select.value != "") {
+        iframe.src = select.value;
+        iframe.hidden = false;
     }
     else
-        document.querySelector("#quick-reports-panel>iframe").hidden = true;
+        iframe.hidden = true;
+}
+
+//for tf
+UTILS.addEvent(document.querySelector("#my-team-folders-panel select"), "change", updateTFIframe);
+function updateTFIframe() {
+    var iframe = document.querySelector("#my-team-folders-panel>iframe");
+    var select = document.querySelector("#my-team-folders-panel select");
+    if (select.value != null && select.value != "") {
+        iframe.src = select.value;
+        iframe.hidden = false;
+    }
+    else
+        iframe.hidden = true;
 }
 
 /*======================
     expand Button script
 ========================*/
-document.querySelector("#expBtn1").addEventListener("click", expandBtnQR, false);
-
+//document.querySelector("#expBtn1").addEventListener("click", expandBtnQR, false);
+UTILS.addEvent(document.querySelector('#expBtn1'), "click", expandBtnQR);
+UTILS.addEvent(document.querySelector('#expBtn2'), "click", expandBtnQR);
+UTILS.addEvent(document.querySelector('#expBtn3'), "click", expandBtnQR);
+UTILS.addEvent(document.querySelector('#expBtn4'), "click", expandBtnQR);
 function expandBtnQR() {
-    if(document.querySelector("#quick-reports-panel>iframe").hidden == false)
+    var panelId = this.parentNode.parentNode.id;
+    if(document.querySelector("#"+panelId+">iframe").hidden == false)
     {
-        if(document.querySelector("#quick-reports-panel>iframe").src != null && document.querySelector("#quick-reports-panel>iframe").src != "" )
+        if (document.querySelector("#" + panelId + ">iframe").src != null && document.querySelector("#" + panelId + ">iframe").src != "")
         {
-            window.open(document.querySelector("#quick-reports-panel>iframe").src);
+            window.open(document.querySelector("#" + panelId + ">iframe").src);
         }
 
     }
 }
 
+
+/*======================
+    cyclic tab switching script
+========================*/
+UTILS.addEvent(document.querySelector('#saveBtn1'), "keydown", saveBtnKeyDown);
+function saveBtnKeyDown(e) {
+    var keyCode = e.keyCode;
+    if (keyCode==9){
+        document.querySelector("#siteName1").focus();
+    }
+    
+}
+//for TF
+UTILS.addEvent(document.querySelector('#TFsaveBtn1'), "keydown", saveBtnKeyDown);
+function saveBtnKeyDown(e) {
+    var keyCode = e.keyCode;
+    if (keyCode == 9) {
+        document.querySelector("#TFsiteName1").focus();
+    }
+
+}
+
+/*======================
+    enter & escape button press script
+========================*/
+UTILS.addEvent(document.querySelector('#siteName1'), "keydown", enterEscapePress);
+UTILS.addEvent(document.querySelector('#siteUrl1'), "keydown", enterEscapePress);
+UTILS.addEvent(document.querySelector('#siteName2'), "keydown", enterEscapePress);
+UTILS.addEvent(document.querySelector('#siteUrl2'), "keydown", enterEscapePress);
+UTILS.addEvent(document.querySelector('#siteName3'), "keydown", enterEscapePress);
+UTILS.addEvent(document.querySelector('#siteUrl3'), "keydown", enterEscapePress);
+UTILS.addEvent(document.querySelector('#TFsiteName1'), "keydown", TFenterEscapePress);
+UTILS.addEvent(document.querySelector('#TFsiteUrl1'), "keydown", TFenterEscapePress);
+UTILS.addEvent(document.querySelector('#TFsiteName2'), "keydown", TFenterEscapePress);
+UTILS.addEvent(document.querySelector('#TFsiteUrl2'), "keydown", TFenterEscapePress);
+UTILS.addEvent(document.querySelector('#TFsiteName3'), "keydown", TFenterEscapePress);
+UTILS.addEvent(document.querySelector('#TFsiteUrl3'), "keydown", TFenterEscapePress);
+
+function enterEscapePress(e) {
+    switch (e.keyCode) {
+        case 13: // enter
+            saveBtnClick();
+            break;
+
+        case 27://escape
+            document.querySelector('#settings-checkbox').checked = false;
+            break;
+    }
+}
+function TFenterEscapePress(e) {
+    switch (e.keyCode) {
+        case 13: // enter
+            TFsaveBtnClick();
+            break;
+
+        case 27://escape
+            document.querySelector('#TFsettings-checkbox').checked = false;
+            break;
+    }
+}
 
 /*
 function quickReportsClick() {

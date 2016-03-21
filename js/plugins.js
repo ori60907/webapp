@@ -28,6 +28,41 @@ var UTILS = (function () {
 
     return {
 
+        //checkreport function
+        checkReport: function (siteName, siteUrl, errorElemnt) {
+            if (siteName.value != "" || siteUrl.value != "") {
+                if (siteName.value == "") {
+                    if (errorElemnt.errElmnt == null)
+                        errorElemnt.errElmnt = siteName;
+                    siteName.className = "textInput textInputError";
+                    return false;
+                }
+                else {
+                    siteName.className = "textInput";
+                }
+                if (UTILS.validateUrl(siteUrl.value) == false) {
+                    siteUrl.className = "textInput textInputError";
+                    if (errorElemnt.errElmnt == null)
+                        errorElemnt.errElmnt = siteUrl;
+                    return false;
+                }
+                else {
+                    siteUrl.className = "textInput";
+                }
+                return true;
+            }
+        },
+
+        //validate the url
+        validateUrl: function (url) {
+            var urlPattern = new RegExp("(http|https)://[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:/~+#-]*[\w@?^=%&amp;/~+#-])?");
+            if (!urlPattern.test(url)) {
+                return false;
+            }
+            return true;
+
+        },
+
         //return the left tab
         getLeftTab: function(){
             if (location.hash === "#quick-reports") {
@@ -110,7 +145,6 @@ var UTILS = (function () {
             var xhr = new XMLHttpRequest(),
 				method = 'GET',
 				options = UTILS.isObject(options) ? options : {};
-            alert(options.method);
             // Check if "method" was supplied
             if (options.method) {
                 method = options.method;
