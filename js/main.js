@@ -89,6 +89,7 @@ xhr.onreadystatechange = function () {
 xhr.send(null);*/
 function ajaxGetNotifications(xhr,res){
     var jsonData = res;
+    alert(res);
     document.getElementById("notification").innerHTML = jsonData.notification;
     document.getElementById("notification").className = "notifications notificationsShow";
 }
