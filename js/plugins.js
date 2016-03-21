@@ -138,6 +138,7 @@ var UTILS = (function () {
                                 // JSON throws an exception on invalid JSON
                                 try {
                                     res = JSON.parse(res);
+                                    alert("json parsing try-" + res.notification);
                                 } catch (err) {
                                     // Trigger "fail" callback if set
                                     if (options.fail) {
