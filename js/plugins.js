@@ -125,19 +125,16 @@ var UTILS = (function () {
                 // If request finished
                 if (xhr.readyState === 4) {
                     status = xhr.status;
-                    alert("ready state 4");
                     // If response is OK or fetched from cache
-                    alert("status=" + status);
                     if ((status >= 200 && status < 300) || status === 304) {
                         var res = xhr.responseText,
 							contentType = xhr.getResponseHeader('Content-Type');
-                        alert(contentType);
+                        alert(res);
                         // If server sent a content type header, handle formats
                         if (contentType) {
                             // Handle JSON format
                             if (contentType === 'text/json' ||
 								contentType === 'application/json') {
-                                alert("content type is json");
                                 // JSON throws an exception on invalid JSON
                                 try {
                                     res = JSON.parse(res);
@@ -151,7 +148,6 @@ var UTILS = (function () {
                                 // Handle XML format
                             } else if (contentType === 'text/xml' ||
 								contentType === 'application/xml') {
-                                alert("wrong- xml");
                                 // responseXML returns a document object
                                 res = xhr.responseXML;
 
@@ -165,7 +161,6 @@ var UTILS = (function () {
 
                         // Trigger done callback with the proper response
                         if (options.done) {
-                            alert("options done");
                             options.done.call(xhr, res);
                         }
                     }

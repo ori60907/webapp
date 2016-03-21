@@ -90,6 +90,8 @@ xhr.send(null);*/
 function ajaxGetNotifications(xhr,res){
     var jsonData = res;
     alert(res);
+    var xhrres = xhr.responseText;
+    alert(xhrres);
     document.getElementById("notification").innerHTML = jsonData.notification;
     document.getElementById("notification").className = "notifications notificationsShow";
 }
