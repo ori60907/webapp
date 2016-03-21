@@ -23,9 +23,72 @@
 
 // Place any jQuery/helper plugins in here.
 
+
 var UTILS = (function () {
 
     return {
+
+        //return the left tab
+        getLeftTab: function(){
+            if (location.hash === "#quick-reports") {
+                return "#public-folders";
+            }
+            if (location.hash === "#my-folders") {
+                return "#quick-reports";
+            }
+            if (location.hash === "#my-team-folders") {
+                return "#my-folders";
+            }
+            if (location.hash === "#public-folders") {
+                return "#my-team-folders";
+            }
+        },
+        //return the left tab
+        getRightTab: function () {
+            if (location.hash === "#quick-reports") {
+                return "#my-folders";
+            }
+            if (location.hash === "#my-folders") {
+                return "#my-team-folders";
+            }
+            if (location.hash === "#my-team-folders") {
+                return "#public-folders";
+            }
+            if (location.hash === "#public-folders") {
+                return "#quick-reports";
+            }
+        },
+        //tab switching helper function
+        //switch all tabs to be invisible
+        //and all tabs to be "not selected"
+        resetTabs:function(){
+            document.getElementById("quick-reports-panel").className = "invisibleSection";;
+            document.getElementById("my-folders-panel").className = "invisibleSection";
+            document.getElementById("my-team-folders-panel").className = "invisibleSection";
+            document.getElementById("public-folders-panel").className = "invisibleSection";
+            document.querySelector(".tabs ul >li:nth-child(1)").className = "tab";
+            document.querySelector(".tabs ul >li:nth-child(2)").className = "tab";
+            document.querySelector(".tabs ul >li:nth-child(3)").className = "tab";
+            document.querySelector(".tabs ul >li:nth-child(4)").className = "tab";
+        },
+
+        //for testing reasons
+        printStmt: function (stmt){
+            alert(stmt);
+        },
+
+        //event handlers functions
+        //add event
+        addEvent: function(elem, type, handler){
+            //no need to support IE8
+            elem.addEventListener(type, handler, false);
+        },
+        //remove event
+        removeEvent: function (elem, type, handler) {
+            //no need to support IE8
+            elem.addEventListener(type, handler);
+        },
+
         /**
 		 * Check if a given value is a plain Object
 		 *

@@ -1,68 +1,80 @@
 
+/*start code*/
+
+locationHashChanged();
+
+
+
+
 /*======================
     tabs switching script
 ========================*/
-locationHashChanged();
-window.addEventListener("hashchange", locationHashChanged, false);
+
+/** upon hash chainging-
+  * switch the tab */
+UTILS.addEvent(window, "hashchange", locationHashChanged);
 function locationHashChanged() {
+
     if (location.hash === "") {
         location.hash = "#quick-reports";
     }
     if (location.hash === "#quick-reports") {
+        UTILS.resetTabs();
         document.getElementById("quick-reports-panel").className = "tabSection";;
-        document.getElementById("my-folders-panel").className = "invisibleSection";
-        document.getElementById("my-team-folders-panel").className = "invisibleSection";
-        document.getElementById("public-folders-panel").className = "invisibleSection";
         document.querySelector(".tabs ul >li:nth-child(1)").className = "selectedTab";
-        document.querySelector(".tabs ul >li:nth-child(2)").className = "tab";
-        document.querySelector(".tabs ul >li:nth-child(3)").className = "tab";
-        document.querySelector(".tabs ul >li:nth-child(4)").className = "tab";
+        document.getElementById("quick-reports-panel").focus();
     }
     if (location.hash === "#my-folders") {
-        document.getElementById("quick-reports-panel").className = "invisibleSection";;
+        UTILS.resetTabs();
         document.getElementById("my-folders-panel").className = "tabSection";
-        document.getElementById("my-team-folders-panel").className = "invisibleSection";
-        document.getElementById("public-folders-panel").className = "invisibleSection";
-        document.querySelector(".tabs ul >li:nth-child(1)").className = "tab";
         document.querySelector(".tabs ul >li:nth-child(2)").className = "selectedTab";
-        document.querySelector(".tabs ul >li:nth-child(3)").className = "tab";
-        document.querySelector(".tabs ul >li:nth-child(4)").className = "tab";
+        document.getElementById("my-folders-panel").focus();
     }
     if (location.hash === "#my-team-folders") {
-        document.getElementById("quick-reports-panel").className = "invisibleSection";;
-        document.getElementById("my-folders-panel").className = "invisibleSection";
+        UTILS.resetTabs();
         document.getElementById("my-team-folders-panel").className = "tabSection";
-        document.getElementById("public-folders-panel").className = "invisibleSection";
-        document.querySelector(".tabs ul >li:nth-child(1)").className = "tab";
-        document.querySelector(".tabs ul >li:nth-child(2)").className = "tab";
         document.querySelector(".tabs ul >li:nth-child(3)").className = "selectedTab";
-        document.querySelector(".tabs ul >li:nth-child(4)").className = "tab";
+        document.getElementById("my-team-folders-panel").focus();
     }
     if (location.hash === "#public-folders") {
-        document.getElementById("quick-reports-panel").className = "invisibleSection";;
-        document.getElementById("my-folders-panel").className = "invisibleSection";
-        document.getElementById("my-team-folders-panel").className = "invisibleSection";
+        UTILS.resetTabs();
         document.getElementById("public-folders-panel").className = "tabSection";
-        document.querySelector(".tabs ul >li:nth-child(1)").className = "tab";
-        document.querySelector(".tabs ul >li:nth-child(2)").className = "tab";
-        document.querySelector(".tabs ul >li:nth-child(3)").className = "tab";
         document.querySelector(".tabs ul >li:nth-child(4)").className = "selectedTab";
+        document.getElementById("public-folders-panel").focus();
     }
 }
+
+/*tabs switching with keyboard*/
+UTILS.addEvent(document,"keydown",keyboardPress);
+function keyboardPress(e){
+    switch (e.keyCode) {
+        case 37: // left
+            location.hash = UTILS.getLeftTab();
+            break;
+
+        case 39://right
+            location.hash = UTILS.getRightTab();
+            break;
+    }
+}
+
 
 /*======================
     get notifications from config.json
 ========================*/
-var xhr = new XMLHttpRequest();
+var ajaxUrl = './data/config.json';
+var ajaxMethod = 'GET';
+var ajaxOptions={method:ajaxMethod, done:ajaxGetNotifications};
+UTILS.ajax(ajaxUrl,ajaxOptions)
+/*var xhr = new XMLHttpRequest();
+
 xhr.open('GET', './data/config.json');
 xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
         var status = xhr.status;
         if ((status >= 200 && status < 300) || status === 304) {
             try{
-                var jsonData = JSON.parse(xhr.responseText);
-                document.getElementById("notification").innerHTML = jsonData.notification;
-                document.getElementById("notification").className = "notifications notificationsShow";
+                
             }
             catch(err){
                 console.log(err.message);
@@ -74,7 +86,14 @@ xhr.onreadystatechange = function () {
         }
     }
 }
-xhr.send(null);
+xhr.send(null);*/
+function ajaxGetNotifications(xhr,res){
+    var jsonData = res;
+    document.getElementById("notification").innerHTML = jsonData.notification;
+    document.getElementById("notification").className = "notifications notificationsShow";
+}
+
+
 
 /*======================
     load dropdowns & form content
