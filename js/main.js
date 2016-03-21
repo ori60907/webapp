@@ -64,6 +64,12 @@ function keyboardPress(e){
 ========================*/
 var ajaxUrl = './data/config.json';
 var ajaxMethod = 'GET';
+
+var ajaxGetNotifications = function (res) {
+    var jsonData = res;
+    document.getElementById("notification").innerHTML = jsonData.notification;
+    document.getElementById("notification").className = "notifications notificationsShow";
+};
 var ajaxOptions={method:ajaxMethod, done:ajaxGetNotifications};
 UTILS.ajax(ajaxUrl,ajaxOptions)
 /*var xhr = new XMLHttpRequest();
@@ -87,14 +93,7 @@ xhr.onreadystatechange = function () {
     }
 }
 xhr.send(null);*/
-var ajaxGetNotifications = function (xhr, res) {
-    var jsonData = res;
-    alert(res);
-    var xhrres = xhr.responseText;
-    alert(xhrres);
-    document.getElementById("notification").innerHTML = jsonData.notification;
-    document.getElementById("notification").className = "notifications notificationsShow";
-};
+
 
 
 

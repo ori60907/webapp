@@ -115,7 +115,6 @@ var UTILS = (function () {
             if (options.method) {
                 method = options.method;
             }
-
             // Setup the request
             xhr.open(method.toUpperCase(), url);
 
@@ -129,7 +128,6 @@ var UTILS = (function () {
                     if ((status >= 200 && status < 300) || status === 304) {
                         var res = xhr.responseText,
 							contentType = xhr.getResponseHeader('Content-Type');
-                        alert(res);
                         // If server sent a content type header, handle formats
                         if (contentType) {
                             // Handle JSON format
@@ -138,7 +136,6 @@ var UTILS = (function () {
                                 // JSON throws an exception on invalid JSON
                                 try {
                                     res = JSON.parse(res);
-                                    alert("json parsing try-" + res.notification);
                                 } catch (err) {
                                     // Trigger "fail" callback if set
                                     if (options.fail) {
