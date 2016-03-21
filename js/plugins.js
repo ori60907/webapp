@@ -46,7 +46,7 @@ var UTILS = (function () {
         //return the left tab
         getRightTab: function () {
             if (location.hash === "#quick-reports") {
-                return "#my-folders";
+                return "#public-folders";
             }
             if (location.hash === "#my-folders") {
                 return "#my-team-folders";
