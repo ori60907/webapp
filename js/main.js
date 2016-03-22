@@ -115,30 +115,7 @@ function loadMenuNotification() {
     };
     var ajaxOptions = { method: ajaxMethod, done: ajaxGetMenuNotifications };
     UTILS.ajax(ajaxUrl, ajaxOptions)
-    //for checking puppses:
 
-    //ajaxGetMenuNotifications(res);
-    /*var xhr = new XMLHttpRequest();
-    
-    xhr.open('GET', './data/config.json');
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4) {
-            var status = xhr.status;
-            if ((status >= 200 && status < 300) || status === 304) {
-                try{
-                    
-                }
-                catch(err){
-                    console.log(err.message);
-                }
-               
-            } else {
-    
-                console.log(xhr.responseText);
-            }
-        }
-    }
-    xhr.send(null);*/
 }
 
 
@@ -195,7 +172,7 @@ function saveBtnClick() {
 
     if (errorElemnt.errElmnt!=null) {
         errorElemnt.errElmnt.focus();
-        (errorElemnt.errElmnt.nextElementSibling).hidden = false;
+        (errorElemnt.errElmnt.nextElementSibling).className = "errorMsg";
     }
     else {
         //save the data in localstorage
@@ -243,7 +220,7 @@ function tfSaveBtnClick() {
 
     if (errorElemnt.errElmnt != null) {
         errorElemnt.errElmnt.focus();
-        (errorElemnt.errElmnt.nextElementSibling).hidden = false;
+        (errorElemnt.errElmnt.nextElementSibling).className = "errorMsg";
     }
     else {
         //save the data in localstorage
@@ -273,7 +250,7 @@ document.querySelector("#TFsiteName3").addEventListener("input", validateSiteNam
 function validateSiteName() {
     if (this.value != "") {
         this.className = "textInput";
-        this.nextElementSibling.hidden = true;
+        this.nextElementSibling.className = "errorMsg hidden";
     }
 }
 document.querySelector("#siteUrl1").addEventListener("input", validateSiteUrl, false);
@@ -285,7 +262,7 @@ document.querySelector("#TFsiteUrl3").addEventListener("input", validateSiteUrl,
 function validateSiteUrl() {
     if (UTILS.validateUrl(this.value)) {
         this.className = "textInput";
-        this.nextElementSibling.hidden = true;
+        this.nextElementSibling.className = "errorMsg hidden";
     }
 }
 
@@ -311,7 +288,7 @@ function clearErrors() {
 }
 function clearInputError(elemntId) {
     document.querySelector(elemntId).className = "textInput";
-    document.querySelector(elemntId).nextElementSibling.hidden = true;
+    document.querySelector(elemntId).nextElementSibling.className = "errorMsg hidden";
 }
 
 /*======================
@@ -425,7 +402,7 @@ UTILS.addEvent(document.querySelector("#quick-reports-panel select"), "change", 
 function updateQRIframe() {
     var iframe = document.querySelector("#quick-reports-panel>iframe");
     var select = document.querySelector("#quick-reports-panel select");
-    if (select.value != null && select.value != "") {
+    if (select.value != null && select.value != "" && select.value != undefined) {
         iframe.src = select.value;
         iframe.hidden = false;
     }
@@ -438,7 +415,7 @@ UTILS.addEvent(document.querySelector("#my-team-folders-panel select"), "change"
 function updateTFIframe() {
     var iframe = document.querySelector("#my-team-folders-panel>iframe");
     var select = document.querySelector("#my-team-folders-panel select");
-    if (select.value != null && select.value != "") {
+    if (select.value != null && select.value != "" && select.value != undefined) {
         iframe.src = select.value;
         iframe.hidden = false;
     }
