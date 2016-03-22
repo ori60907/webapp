@@ -114,11 +114,12 @@
 
             <div id="quick-reports-panel" class="tabSection">
                 <div class="settings-bar">
-                    <select>
+                    <label class="hidden" for="qrSelect">select a site to show</label>
+                    <select id="qrSelect">
                         <option>Ynet</option>
                     </select>
                     <input type="checkbox" id="settings-checkbox" />
-                    <label class="settingsBtn" for="settings-checkbox"></label>
+                    <label class="settingsBtn hide-text" for="settings-checkbox">open or close the settings of the reports</label>
                     <div class="expandBtn" id="expBtn1"></div>
 
                     <div class="reports-tab">
@@ -187,7 +188,7 @@
                                 </div>
                             </div>
                             <label tabindex=8 class="saveBtn" id="saveBtn1">save</label>
-                            <label tabindex=7 class="cancleBtn" for="settings-checkbox">cancle</label>
+                            <div id="qrCancleBtn" tabindex=7 class="cancleBtn">cancle</div>
                         </form>
                     </div>
                 </div>
@@ -203,11 +204,12 @@
             
             <div id="my-team-folders-panel" class="invisibleSection">
                 <div class="settings-bar">
-                    <select>
+                    <label class="hidden" for="tfSelect">select a site to show</label>
+                    <select id="tfSelect">
                         <option>Ynet</option>
                     </select>
                     <input type="checkbox" id="TFsettings-checkbox" />
-                    <label class="settingsBtn" for="TFsettings-checkbox"></label>
+                    <label class="settingsBtn hide-text" for="TFsettings-checkbox">open or close the settings of the reports</label>
                     <div class="expandBtn" id="expBtn3"></div>
 
                     <div class="reports-tab">
@@ -276,7 +278,7 @@
                                 </div>
                             </div>
                             <label tabindex=8 class="saveBtn" id="TFsaveBtn1">save</label>
-                            <label tabindex=7 class="cancleBtn" for="TFsettings-checkbox">cancle</label>
+                            <div tabindex=7 class="cancleBtn" id="tfCancleBtn">cancle</div>
                         </form>
                     </div>
                 </div>

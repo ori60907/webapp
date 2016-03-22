@@ -85,7 +85,7 @@ function keyboardPress(e){
 
 
 /*======================
-    get notifications from config.json
+    get notifications and menu from config.json
 ========================*/
 function loadMenuNotification() {
     var ajaxUrl = './data/config.json';
@@ -114,86 +114,10 @@ function loadMenuNotification() {
         }
     };
     var ajaxOptions = { method: ajaxMethod, done: ajaxGetMenuNotifications };
-    //UTILS.ajax(ajaxUrl, ajaxOptions)
+    UTILS.ajax(ajaxUrl, ajaxOptions)
     //for checking puppses:
-    var res = {
-        "notification": "The data of UTF BI would be updated at 16:00 pm.",
-        "quickActions": [
-            {
-                "label": "Select<br>Reporting Platform",
-                "icon": "action-report-new",
-                "actionsLabel": "Choose QS report",
-                "actions": [
-                    {
-                        "label": "Corporate",
-                        "url": "http://netcraft.co.il"
-                    }, {
-                        "label": "Simple",
-                        "url": "http://netcraft.co.il"
-                    }, {
-                        "label": "Business",
-                        "url": "http://netcraft.co.il"
-                    }
-                ]
-            }, {
-                "label": "Select<br>Dashboard",
-                "icon": "action-report-top",
-                "actionsLabel": "Choose Dashboard",
-                "actions": [
-                    {
-                        "label": "Account Dashboard",
-                        "url": "http://netcraft.co.il"
-                    }, {
-                        "label": "Daily Huddle Dashboard",
-                        "url": "http://netcraft.co.il"
-                    }, {
-                        "label": "Tier 2 Dashboard",
-                        "url": "http://netcraft.co.il"
-                    }, {
-                        "label": "ADM Dashboard",
-                        "url": "http://netcraft.co.il"
-                    }
-                ]
-            }, {
-                "label": "Help &amp;<br>Tutorials",
-                "icon": "actions-help",
-                "actionsLabel": "Choose guide",
-                "actions": [
-                    {
-                        "label": "Real Time",
-                        "url": "http://netcraft.co.il"
-                    }, {
-                        "label": "Past Data",
-                        "url": "http://netcraft.co.il"
-                    }, {
-                        "label": "Corporate Data",
-                        "url": "http://netcraft.co.il"
-                    }
-                ]
-            }
-        ],
-        "tabsList": [
-            {
-                "options": {
-                    "rowLabel": "Report"
-                }
-            }, {
-                "options": {
-                    "url": "http://www.paulirish.com/"
-                }
-            }, {
-                "options": {
-                    "rowLabel": "Folder"
-                }
-            }, {
-                "options": {
-                    "url": "http://addyosmani.com/"
-                }
-            }
-        ]
-    }
 
-    ajaxGetMenuNotifications(res);
+    //ajaxGetMenuNotifications(res);
     /*var xhr = new XMLHttpRequest();
     
     xhr.open('GET', './data/config.json');
@@ -390,6 +314,18 @@ function clearInputError(elemntId) {
     document.querySelector(elemntId).nextElementSibling.hidden = true;
 }
 
+/*======================
+    cancle button script
+========================*/
+
+UTILS.addEvent(document.querySelector('#qrCancleBtn'), "click", qrCancleBtnClick);
+function qrCancleBtnClick() {
+    document.querySelector('#settings-checkbox').checked = false;
+}
+UTILS.addEvent(document.querySelector('#tfCancleBtn'), "click", tfCancleBtnClick);
+function tfCancleBtnClick() {
+    document.querySelector('#TFsettings-checkbox').checked = false;
+}
 
 /*======================
     update select script
@@ -636,31 +572,3 @@ function searchBoxEnterPress(e) {
             break;
     }
 }
-/*
-function quickReportsClick() {
-    window.location.hash = 'panel-' + id.replace('#', '');
-}
-function myFoldersClick() {
-    if (history.pushState) {
-        history.pushState(null, null, '#my-folders');
-    }
-    else {
-        location.hash = '#my-folders';
-    }
-}
-function myTeamFoldersClick() {
-    if (history.pushState) {
-        history.pushState(null, null, '#my-team-folders');
-    }
-    else {
-        location.hash = '#my-team-folders';
-    }
-}
-function publicFoldersClick() {
-    if (history.pushState) {
-        history.pushState(null, null, '#public-folders');
-    }
-    else {
-        location.hash = '#public-folders';
-    }
-}*/

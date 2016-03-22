@@ -52,7 +52,11 @@
     padding-right:5px;
 }
 
-
+.hide-text {
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+}
 
 html{
     font-size:62.5%;
