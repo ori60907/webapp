@@ -99,14 +99,14 @@ function loadMenuNotification() {
         for (i = 0; i < navSelectionArray.length; i++) {
             alert(quickActionsArray[i]);
             navSelectionArray[i].querySelector("p").innerHTML = quickActionsArray[i].label;
-            navSelectionArray[i].backgroundImage = "url('../img/icons/" + quickActionsArray[i].icon + ".png')";
+            navSelectionArray[i].style.backgroundImage = "url('../img/icons/" + quickActionsArray[i].icon + ".png')";
             navSelectionArray[i].querySelector(".menu-caption p").innerHTML = quickActionsArray[i].actionsLabel;
             var actionList = navSelectionArray[i].querySelector(".action-list");
             actionList.innerHTML = "";
             var actionsArray=quickActionsArray[i].actions;
             for (j = 0; j < actionsArray.length; j++) {
                 var newLi = document.createElement("LI");
-                newLi.innerHTML = "<a href='" + actionsArray[i].url + "'>" + actionsArray[i].label + "</a>";
+                newLi.innerHTML = "<a href='" + actionsArray[j].url + "'>" + actionsArray[j].label + "</a>";
                 actionList.appendChild(newLi);
             }
         }
