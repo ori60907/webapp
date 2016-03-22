@@ -1,8 +1,25 @@
 
 /*start code*/
 
-locationHashChanged();
 
+var myfoldersurl="http://netcraft.co.il";
+var publicfoldersurl = "http://www.mako.co.il";
+/*======================
+    load dropdowns & form content
+========================*/
+UTILS.addEvent(window, "hashchange", locationHashChanged);
+UTILS.addEvent(window, "load", pageLoad);
+function pageLoad() {
+    loadMenuNotification();
+    updateDropDowns();
+    updateForm();
+    TFupdateDropDowns();
+    TFupdateForm();
+    if (localStorage.getItem('lastTab') != null) {
+        location.hash = localStorage.getItem('lastTab');
+    }
+    locationHashChanged();
+}
 
 
 
@@ -12,9 +29,8 @@ locationHashChanged();
 
 /** upon hash chainging-
   * switch the tab */
-UTILS.addEvent(window, "hashchange", locationHashChanged);
-function locationHashChanged() {
 
+function locationHashChanged() {
     if (location.hash === "") {
         location.hash = "#quick-reports";
     }
@@ -23,24 +39,33 @@ function locationHashChanged() {
         document.getElementById("quick-reports-panel").className = "tabSection";;
         document.querySelector(".tabs ul >li:nth-child(1)").className = "selectedTab";
         document.getElementById("quick-reports-panel").focus();
+        updateQRIframe();
+        localStorage.setItem('lastTab', "quick-reports");
+
     }
     if (location.hash === "#my-folders") {
         UTILS.resetTabs();
         document.getElementById("my-folders-panel").className = "tabSection";
         document.querySelector(".tabs ul >li:nth-child(2)").className = "selectedTab";
         document.getElementById("my-folders-panel").focus();
+        document.querySelector("#my-folders-panel>iframe").src = myfoldersurl;
+        localStorage.setItem('lastTab', "my-folders");
     }
     if (location.hash === "#my-team-folders") {
         UTILS.resetTabs();
         document.getElementById("my-team-folders-panel").className = "tabSection";
         document.querySelector(".tabs ul >li:nth-child(3)").className = "selectedTab";
         document.getElementById("my-team-folders-panel").focus();
+        updateTFIframe();
+        localStorage.setItem('lastTab', "my-team-folders");
     }
     if (location.hash === "#public-folders") {
         UTILS.resetTabs();
         document.getElementById("public-folders-panel").className = "tabSection";
         document.querySelector(".tabs ul >li:nth-child(4)").className = "selectedTab";
         document.getElementById("public-folders-panel").focus();
+        document.querySelector("#public-folders-panel>iframe").src = publicfoldersurl;
+        localStorage.setItem('lastTab', "public-folders");
     }
 }
 
@@ -62,48 +87,58 @@ function keyboardPress(e){
 /*======================
     get notifications from config.json
 ========================*/
-var ajaxUrl = './data/config.json';
-var ajaxMethod = 'GET';
+function loadMenuNotification() {
+    var ajaxUrl = './data/config.json';
+    var ajaxMethod = 'GET';
 
-var ajaxGetNotifications = function (res) {
-    var jsonData = res;
-    document.getElementById("notification").innerHTML = jsonData.notification;
-    document.getElementById("notification").className = "notifications notificationsShow";
-};
-var ajaxOptions={method:ajaxMethod, done:ajaxGetNotifications};
-UTILS.ajax(ajaxUrl,ajaxOptions)
-/*var xhr = new XMLHttpRequest();
-
-xhr.open('GET', './data/config.json');
-xhr.onreadystatechange = function () {
-    if (xhr.readyState === 4) {
-        var status = xhr.status;
-        if ((status >= 200 && status < 300) || status === 304) {
-            try{
-                
+    var ajaxGetMenuNotifications = function (res) {
+        var jsonData = res;
+        UTILS.addNotification("FileNotification", jsonData.notification);
+        navSelectionArray = document.querySelectorAll(".nav-section");
+        quickActionsArray = jsonData.quickActions;
+        for (i = 0; i < navSelectionArray.length; i++) {
+            alert(quickActionsArray[i]);
+            navSelectionArray[i].querySelector("p").innerHTML = quickActionsArray[i].label;
+            navSelectionArray[i].backgroundImage = "url('../img/icons/" + quickActionsArray[i].icon + ".png')";
+            navSelectionArray[i].querySelector(".menu-caption p").innerHTML = quickActionsArray[i].actionsLabel;
+            var actionList = navSelectionArray[i].querySelector(".action-list");
+            actionList.innerHTML = "";
+            var actionsArray=quickActionsArray[i].actions;
+            for (j = 0; j < actionsArray.length; j++) {
+                var newLi = document.createElement("LI");
+                newLi.innerHTML = "<a href='" + actionsArray[i].url + "'>" + actionsArray[i].label + "</a>";
+                actionList.appendChild(newLi);
             }
-            catch(err){
-                console.log(err.message);
+        }
+    };
+    var ajaxOptions = { method: ajaxMethod, done: ajaxGetMenuNotifications };
+    UTILS.ajax(ajaxUrl, ajaxOptions)
+    /*var xhr = new XMLHttpRequest();
+    
+    xhr.open('GET', './data/config.json');
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+            var status = xhr.status;
+            if ((status >= 200 && status < 300) || status === 304) {
+                try{
+                    
+                }
+                catch(err){
+                    console.log(err.message);
+                }
+               
+            } else {
+    
+                console.log(xhr.responseText);
             }
-           
-        } else {
-
-            console.log(xhr.responseText);
         }
     }
+    xhr.send(null);*/
 }
-xhr.send(null);*/
 
 
 
 
-/*======================
-    load dropdowns & form content
-========================*/
-updateDropDowns();
-updateForm();
-TFupdateDropDowns();
-TFupdateForm();
 
 /*======================
     settings button script
@@ -139,19 +174,19 @@ function saveBtnClick() {
     var siteUrl3 = document.querySelector('#siteUrl3');
     var errorElemnt = {errElmnt: null };
     var reportIsValid = true;
-    var jsonObj = { quickReports: [] };
+    var quickReports = [];
     clearErrors();
     //check first report
     if (UTILS.checkReport(siteName1, siteUrl1, errorElemnt))
-        jsonObj.quickReports.push({ "Name": siteName1.value, "Url": siteUrl1.value });
+        quickReports.push({ "Name": siteName1.value, "Url": siteUrl1.value });
 
     //check second report
     if (UTILS.checkReport(siteName2, siteUrl2, errorElemnt))
-        jsonObj.quickReports.push({ "Name": siteName2.value, "Url": siteUrl2.value });
+        quickReports.push({ "Name": siteName2.value, "Url": siteUrl2.value });
 
     //check third report
     if (UTILS.checkReport(siteName3, siteUrl3, errorElemnt))
-        jsonObj.quickReports.push({ "Name": siteName3.value, "Url": siteUrl3.value });
+        quickReports.push({ "Name": siteName3.value, "Url": siteUrl3.value });
 
     if (errorElemnt.errElmnt!=null) {
         errorElemnt.errElmnt.focus();
@@ -159,7 +194,17 @@ function saveBtnClick() {
     }
     else {
         //save the data in localstorage
-        localStorage.setItem('JsonData', JSON.stringify(jsonObj));
+        if (localStorage.getItem('JsonData') != null) {
+            //JsonData already exist
+            var jsonObj = JSON.parse(localStorage.getItem('JsonData'));
+            jsonObj.quickReports = quickReports;
+            localStorage.setItem('JsonData', JSON.stringify(jsonObj));
+        }
+        else {
+            //JsonData does not exist
+            var jsonObj = { quickReports: quickReports };
+            localStorage.setItem('JsonData', JSON.stringify(jsonObj));
+        }
         document.querySelector('#settings-checkbox').checked = false;
         updateDropDowns();
         updateForm();
@@ -177,19 +222,19 @@ function tfSaveBtnClick() {
     var siteUrl3 = document.querySelector('#TFsiteUrl3');
     var errorElemnt = { errElmnt: null };
     var reportIsValid = true;
-    var jsonObj = { teamFolders: [] };
+    var teamFolders = [];
     clearErrors();
     //check first report
     if (UTILS.checkReport(siteName1, siteUrl1, errorElemnt))
-        jsonObj.teamFolders.push({ "Name": siteName1.value, "Url": siteUrl1.value });
+        teamFolders.push({ "Name": siteName1.value, "Url": siteUrl1.value });
 
     //check second report
     if (UTILS.checkReport(siteName2, siteUrl2, errorElemnt))
-        jsonObj.teamFolders.push({ "Name": siteName2.value, "Url": siteUrl2.value });
+        teamFolders.push({ "Name": siteName2.value, "Url": siteUrl2.value });
 
     //check third report
     if (UTILS.checkReport(siteName3, siteUrl3, errorElemnt))
-        jsonObj.teamFolders.push({ "Name": siteName3.value, "Url": siteUrl3.value });
+        teamFolders.push({ "Name": siteName3.value, "Url": siteUrl3.value });
 
     if (errorElemnt.errElmnt != null) {
         errorElemnt.errElmnt.focus();
@@ -197,7 +242,17 @@ function tfSaveBtnClick() {
     }
     else {
         //save the data in localstorage
-        localStorage.setItem('TFJsonData', JSON.stringify(jsonObj));
+        if (localStorage.getItem('JsonData') != null) {
+            //JsonData already exist
+            var jsonObj = JSON.parse(localStorage.getItem('JsonData'));
+            jsonObj.teamFolders = teamFolders;
+            localStorage.setItem('JsonData', JSON.stringify(jsonObj));
+        }
+        else {
+            //JsonData does not exist
+            var jsonObj = { teamFolders: teamFolders };
+            localStorage.setItem('JsonData', JSON.stringify(jsonObj));
+        }
         document.querySelector('#TFsettings-checkbox').checked = false;
         TFupdateDropDowns();
         TFupdateForm();
@@ -263,46 +318,50 @@ function updateDropDowns() {
     if (localStorage.getItem('JsonData') != null) {
         var jsonObj = JSON.parse(localStorage.getItem('JsonData'));
         var quickReports = jsonObj.quickReports;
-        var quickReportsSelect = document.querySelector('#quick-reports-panel select');
-        var quickReportsLength = quickReportsSelect.length;
-        for (var i = 0; i < quickReportsLength; i++) {
-            quickReportsSelect.remove(0);
+        if (quickReports != null && quickReports != undefined) {
+            var quickReportsSelect = document.querySelector('#quick-reports-panel select');
+            var quickReportsLength = quickReportsSelect.length;
+            for (var i = 0; i < quickReportsLength; i++) {
+                quickReportsSelect.remove(0);
+            }
+            for (var i = 0; i < quickReports.length; i++) {
+                var option = document.createElement("option");
+                option.text = quickReports[i].Name;
+                option.value = quickReports[i].Url;
+                quickReportsSelect.add(option);
+                //update the form
+                document.querySelector('#siteName' + (i + 1)).value = quickReports[i].Name;
+                document.querySelector('#siteUrl' + (i + 1)).value = quickReports[i].Url;
+            }
+            quickReportsSelect.selectedIndex = quickReportsSelect.length - 1;
+            updateQRIframe();
         }
-        for (var i = 0; i < quickReports.length; i++) {
-            var option = document.createElement("option");
-            option.text = quickReports[i].Name;
-            option.value = quickReports[i].Url;
-            quickReportsSelect.add(option);
-            //update the form
-            document.querySelector('#siteName' + (i+1)).value = quickReports[i].Name;
-            document.querySelector('#siteUrl' + (i + 1)).value = quickReports[i].Url;
-        }
-        quickReportsSelect.selectedIndex = quickReportsSelect.length-1;
-        updateQRIframe();
     }
 }
 
 //for TF
 function TFupdateDropDowns() {
-    if (localStorage.getItem('TFJsonData') != null) {
-        var jsonObj = JSON.parse(localStorage.getItem('TFJsonData'));
+    if (localStorage.getItem('JsonData') != null) {
+        var jsonObj = JSON.parse(localStorage.getItem('JsonData'));
         var teamFolders = jsonObj.teamFolders;
-        var teamFoldersSelect = document.querySelector('#my-team-folders-panel select');
-        var length = teamFoldersSelect.length;
-        for (var i = 0; i < length; i++) {
-            teamFoldersSelect.remove(0);
+        if (teamFolders != null && teamFolders != undefined) {
+            var teamFoldersSelect = document.querySelector('#my-team-folders-panel select');
+            var length = teamFoldersSelect.length;
+            for (var i = 0; i < length; i++) {
+                teamFoldersSelect.remove(0);
+            }
+            for (var i = 0; i < teamFolders.length; i++) {
+                var option = document.createElement("option");
+                option.text = teamFolders[i].Name;
+                option.value = teamFolders[i].Url;
+                teamFoldersSelect.add(option);
+                //update the form
+                document.querySelector('#TFsiteName' + (i + 1)).value = teamFolders[i].Name;
+                document.querySelector('#TFsiteUrl' + (i + 1)).value = teamFolders[i].Url;
+            }
+            teamFoldersSelect.selectedIndex = teamFoldersSelect.length - 1;
+            updateTFIframe();
         }
-        for (var i = 0; i < teamFolders.length; i++) {
-            var option = document.createElement("option");
-            option.text = teamFolders[i].Name;
-            option.value = teamFolders[i].Url;
-            teamFoldersSelect.add(option);
-            //update the form
-            document.querySelector('#TFsiteName' + (i + 1)).value = teamFolders[i].Name;
-            document.querySelector('#TFsiteUrl' + (i + 1)).value = teamFolders[i].Url;
-        }
-        teamFoldersSelect.selectedIndex = teamFoldersSelect.length - 1;
-        updateTFIframe();
     }
 }
 
@@ -310,29 +369,33 @@ function updateForm() {
     if (localStorage.getItem('JsonData') != null) {
         var jsonObj = JSON.parse(localStorage.getItem('JsonData'));
         var quickReports = jsonObj.quickReports;
-        for (var i = 0; i < 3; i++) {
-            document.querySelector('#siteName' + (i + 1)).value = "";
-            document.querySelector('#siteUrl' + (i + 1)).value = "";
-        }
-        for (var i = 0; i < quickReports.length; i++) {
-            document.querySelector('#siteName' + (i + 1)).value = quickReports[i].Name;
-            document.querySelector('#siteUrl' + (i + 1)).value = quickReports[i].Url;
+        if (quickReports != null && quickReports != undefined) {
+            for (var i = 0; i < 3; i++) {
+                document.querySelector('#siteName' + (i + 1)).value = "";
+                document.querySelector('#siteUrl' + (i + 1)).value = "";
+            }
+            for (var i = 0; i < quickReports.length; i++) {
+                document.querySelector('#siteName' + (i + 1)).value = quickReports[i].Name;
+                document.querySelector('#siteUrl' + (i + 1)).value = quickReports[i].Url;
+            }
         }
     }
 }
 
 //for TF
 function TFupdateForm() {
-    if (localStorage.getItem('TFJsonData') != null) {
-        var jsonObj = JSON.parse(localStorage.getItem('TFJsonData'));
+    if (localStorage.getItem('JsonData') != null) {
+        var jsonObj = JSON.parse(localStorage.getItem('JsonData'));
         var teamFolders = jsonObj.teamFolders;
-        for (var i = 0; i < 3; i++) {
-            document.querySelector('#TFsiteName' + (i + 1)).value = "";
-            document.querySelector('#TFsiteUrl' + (i + 1)).value = "";
-        }
-        for (var i = 0; i < teamFolders.length; i++) {
-            document.querySelector('#TFsiteName' + (i + 1)).value = teamFolders[i].Name;
-            document.querySelector('#TFsiteUrl' + (i + 1)).value = teamFolders[i].Url;
+        if (teamFolders != null && teamFolders != undefined) {
+            for (var i = 0; i < 3; i++) {
+                document.querySelector('#TFsiteName' + (i + 1)).value = "";
+                document.querySelector('#TFsiteUrl' + (i + 1)).value = "";
+            }
+            for (var i = 0; i < teamFolders.length; i++) {
+                document.querySelector('#TFsiteName' + (i + 1)).value = teamFolders[i].Name;
+                document.querySelector('#TFsiteUrl' + (i + 1)).value = teamFolders[i].Url;
+            }
         }
     }
 }
@@ -438,7 +501,7 @@ function enterEscapePress(e) {
 function TFenterEscapePress(e) {
     switch (e.keyCode) {
         case 13: // enter
-            TFsaveBtnClick();
+            tfSaveBtnClick();
             break;
 
         case 27://escape
@@ -447,6 +510,51 @@ function TFenterEscapePress(e) {
     }
 }
 
+/*======================
+    search reports script
+========================*/
+UTILS.addEvent(document.querySelector('#serchBoxInput'), "keydown", searchBoxEnterPress);
+//prevent form def submitting
+document.getElementById('searchForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+}, false);
+function searchBoxEnterPress(e) {
+    switch (e.keyCode) {
+        case 13: // enter
+            //search for reports
+            var val = this.value;
+            if (val != null && val != undefined &&val!="") {
+                if (localStorage.getItem('JsonData') != null) {
+                    var jsonObj = JSON.parse(localStorage.getItem('JsonData'));
+                    var quickReports = jsonObj.quickReports;
+                    var teamFolders = jsonObj.teamFolders;
+                    if (quickReports != null && quickReports != undefined) {
+                        for (i = 0; i < quickReports.length;i++) {
+                            if (quickReports[i].Name.indexOf(val) != -1) {
+                                location.hash="quick-reports";
+                                document.querySelector('#quick-reports-panel select').selectedIndex = i;
+                                UTILS.removeNotification("ReportNotification");
+                                return true;
+                            }
+                        }
+                    }
+                    if (teamFolders != null && teamFolders != undefined) {
+                        for (i = 0; i < teamFolders.length; i++) {
+                            if (teamFolders[i].Name.indexOf(val) != -1) {
+                                location.hash = "my-team-folders";
+                                document.querySelector('#my-team-folders-panel select').selectedIndex = i;
+                                UTILS.removeNotification("ReportNotification");
+                                return true;
+                            }
+                        }
+                    }
+                }
+                
+            }
+            UTILS.addNotification("ReportNotification", "The searched report " + val + " was not found.");
+            break;
+    }
+}
 /*
 function quickReportsClick() {
     window.location.hash = 'panel-' + id.replace('#', '');

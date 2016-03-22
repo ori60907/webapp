@@ -20,15 +20,17 @@
         <div class="layout-wrap">
             <a href="#"><img src="img/logo-netcraft.svg" alt="netcraft"></a>
 
-            <form class="search-box">
-                <label class="hidden" for="serchBoxInput"></label>
-                <input id="serchBoxInput" type="search" name="q" placeholder="search">
+            <form id="searchForm" action="" class="search-box">
+                <label class="hidden" for="serchBoxInput">search reports</label>
+                <input id="serchBoxInput" type="text" placeholder="search">
             </form>
         </div>
     </header>
 
     <section class="page-body layout-wrap">
-        <div id="notification" class="notifications"></div>
+
+        <div id="FileNotification" class="notifications"></div>
+        <div id="ReportNotification" class="notifications"></div>
 
         <nav>
             <div class="nav-section">
@@ -118,7 +120,7 @@
                                 <h5>Report1:</h5>
                                 <div class="site-name">
                                     <label for="siteName1" id="siteNameLabel" tabindex=0>Name</label>
-                                    <input  tabindex=1 type="text" class="textInput" id="siteName1" />
+                                    <input placeholder="site's name"  tabindex=1 type="text" class="textInput" id="siteName1" />
                                     <div hidden="true" class="errorMsg">
                                         <div class="errorMsgArrow"></div>
                                         <div class="exclamationMark">!</div>
@@ -127,7 +129,7 @@
                                 </div>
                                 <div class="site-url">
                                     <label for ="siteUrl1">URL</label>
-                                    <input tabindex=2 type="text" class="textInput" id="siteUrl1" />
+                                    <input placeholder="site's url" tabindex=2 type="text" class="textInput" id="siteUrl1" />
                                     <div hidden="true" class="errorMsg">
                                         <div class="errorMsgArrow"></div>
                                         <div class="exclamationMark">!</div>
@@ -139,7 +141,7 @@
                                 <h5>Report2:</h5>
                                 <div class="site-name">
                                     <label for="siteName2">Name</label>
-                                    <input tabindex=3 type="text" class="textInput" id="siteName2" />
+                                    <input placeholder="site's name" tabindex=3 type="text" class="textInput" id="siteName2" />
                                     <div hidden="true" class="errorMsg">
                                         <div class="errorMsgArrow"></div>
                                         <div class="exclamationMark">!</div>
@@ -148,7 +150,7 @@
                                 </div>
                                 <div class="site-url">
                                     <label for="siteUrl2">URL</label>
-                                    <input tabindex=4 type="text" class="textInput" id="siteUrl2" />
+                                    <input placeholder="site's url" tabindex=4 type="text" class="textInput" id="siteUrl2" />
                                     <div hidden="true" class="errorMsg">
                                         <div class="errorMsgArrow"></div>
                                         <div class="exclamationMark">!</div>
@@ -160,7 +162,7 @@
                                 <h5>Report3:</h5>
                                 <div class="site-name">
                                     <label for="siteName3">Name</label>
-                                    <input tabindex=5 type="text" class="textInput" id="siteName3" />
+                                    <input placeholder="site's name" tabindex=5 type="text" class="textInput" id="siteName3" />
                                     <div hidden="true" class="errorMsg">
                                         <div class="errorMsgArrow"></div>
                                         <div class="exclamationMark">!</div>
@@ -169,7 +171,7 @@
                                 </div>
                                 <div class="site-url">
                                     <label for="siteUrl3">URL</label>
-                                    <input tabindex=6 type="text" class="textInput" id="siteUrl3" />
+                                    <input placeholder="site's url" tabindex=6 type="text" class="textInput" id="siteUrl3" />
                                     <div hidden="true" class="errorMsg">
                                         <div class="errorMsgArrow"></div>
                                         <div class="exclamationMark">!</div>

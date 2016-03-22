@@ -28,6 +28,19 @@ var UTILS = (function () {
 
     return {
 
+        //add notification
+        addNotification: function (nId, text) {
+            var element = document.getElementById(nId);
+            element.innerHTML = text;
+            element.className = "notifications notificationsShow";
+        },
+
+        //remove notification
+        removeNotification: function(nId){
+            var element = document.getElementById(nId);
+            element.className = "notifications";
+        },
+
         //checkreport function
         checkReport: function (siteName, siteUrl, errorElemnt) {
             if (siteName.value != "" || siteUrl.value != "") {
@@ -40,6 +53,8 @@ var UTILS = (function () {
                 else {
                     siteName.className = "textInput";
                 }
+                //add protocol if omitted
+                UTILS.fixUrlProtocol(siteUrl);
                 if (UTILS.validateUrl(siteUrl.value) == false) {
                     siteUrl.className = "textInput textInputError";
                     if (errorElemnt.errElmnt == null)
@@ -55,12 +70,26 @@ var UTILS = (function () {
 
         //validate the url
         validateUrl: function (url) {
-            var urlPattern = new RegExp("(http|https)://[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:/~+#-]*[\w@?^=%&amp;/~+#-])?");
+
+            //simple regexp
+            //var urlPattern = new RegExp("(http|https)://[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:/~+#-]*[\w@?^=%&amp;/~+#-])?");
+            //more sophisticated one-
+            var urlPattern = /^(?:(?:https?|ftp):\/\/)(?:\S+(?::\S*)?@)?(?:(?!10(?:\.\d{1,3}){3})(?!127(?:\.\d{1,3}){3})(?!169\.254(?:\.\d{1,3}){2})(?!192\.168(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]+-?)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]+-?)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/[^\s]*)?$/i;
             if (!urlPattern.test(url)) {
                 return false;
             }
             return true;
 
+        },
+        //fix the protocol if needed
+        fixUrlProtocol: function (siteUrl){
+            var url=siteUrl.value;
+            var httpPrefix=url.substring(0,7);
+            var httpsPrefix=url.substring(0,8);
+            if (httpPrefix!="http://"&&httpsPrefix!="https://"){
+                //there is no protocol add one
+                siteUrl.value="http://"+url;
+            }
         },
 
         //return the left tab
@@ -97,10 +126,14 @@ var UTILS = (function () {
         //switch all tabs to be invisible
         //and all tabs to be "not selected"
         resetTabs:function(){
-            document.getElementById("quick-reports-panel").className = "invisibleSection";;
+            document.getElementById("quick-reports-panel").className = "invisibleSection";
+            document.querySelector("#quick-reports-panel>iframe").src = "";
             document.getElementById("my-folders-panel").className = "invisibleSection";
+            document.querySelector("#my-folders-panel>iframe").src = "";
             document.getElementById("my-team-folders-panel").className = "invisibleSection";
+            document.querySelector("#my-team-folders-panel>iframe").src = "";
             document.getElementById("public-folders-panel").className = "invisibleSection";
+            document.querySelector("#public-folders-panel>iframe").src = "";
             document.querySelector(".tabs ul >li:nth-child(1)").className = "tab";
             document.querySelector(".tabs ul >li:nth-child(2)").className = "tab";
             document.querySelector(".tabs ul >li:nth-child(3)").className = "tab";
