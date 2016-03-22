@@ -97,13 +97,15 @@ function loadMenuNotification() {
         navSelectionArray = document.querySelectorAll(".nav-section");
         quickActionsArray = jsonData.quickActions;
         for (i = 0; i < navSelectionArray.length; i++) {
-            alert(quickActionsArray[i]);
             navSelectionArray[i].querySelector("p").innerHTML = quickActionsArray[i].label;
-            navSelectionArray[i].style.backgroundImage = "url('../img/icons/" + quickActionsArray[i].icon + ".png')";
+            navSelectionArray[i].style.backgroundImage ="url('./img/icons/" + quickActionsArray[i].icon + ".png')";
             navSelectionArray[i].querySelector(".menu-caption p").innerHTML = quickActionsArray[i].actionsLabel;
             var actionList = navSelectionArray[i].querySelector(".action-list");
             actionList.innerHTML = "";
-            var actionsArray=quickActionsArray[i].actions;
+            var actionsArray = quickActionsArray[i].actions;
+            if (actionsArray.length != 0) {
+                navSelectionArray[i].querySelector(".menu a").href = actionsArray[0].url;
+            }
             for (j = 0; j < actionsArray.length; j++) {
                 var newLi = document.createElement("LI");
                 newLi.innerHTML = "<a href='" + actionsArray[j].url + "'>" + actionsArray[j].label + "</a>";
@@ -112,7 +114,86 @@ function loadMenuNotification() {
         }
     };
     var ajaxOptions = { method: ajaxMethod, done: ajaxGetMenuNotifications };
-    UTILS.ajax(ajaxUrl, ajaxOptions)
+    //UTILS.ajax(ajaxUrl, ajaxOptions)
+    //for checking puppses:
+    var res = {
+        "notification": "The data of UTF BI would be updated at 16:00 pm.",
+        "quickActions": [
+            {
+                "label": "Select<br>Reporting Platform",
+                "icon": "action-report-new",
+                "actionsLabel": "Choose QS report",
+                "actions": [
+                    {
+                        "label": "Corporate",
+                        "url": "http://netcraft.co.il"
+                    }, {
+                        "label": "Simple",
+                        "url": "http://netcraft.co.il"
+                    }, {
+                        "label": "Business",
+                        "url": "http://netcraft.co.il"
+                    }
+                ]
+            }, {
+                "label": "Select<br>Dashboard",
+                "icon": "action-report-top",
+                "actionsLabel": "Choose Dashboard",
+                "actions": [
+                    {
+                        "label": "Account Dashboard",
+                        "url": "http://netcraft.co.il"
+                    }, {
+                        "label": "Daily Huddle Dashboard",
+                        "url": "http://netcraft.co.il"
+                    }, {
+                        "label": "Tier 2 Dashboard",
+                        "url": "http://netcraft.co.il"
+                    }, {
+                        "label": "ADM Dashboard",
+                        "url": "http://netcraft.co.il"
+                    }
+                ]
+            }, {
+                "label": "Help &amp;<br>Tutorials",
+                "icon": "actions-help",
+                "actionsLabel": "Choose guide",
+                "actions": [
+                    {
+                        "label": "Real Time",
+                        "url": "http://netcraft.co.il"
+                    }, {
+                        "label": "Past Data",
+                        "url": "http://netcraft.co.il"
+                    }, {
+                        "label": "Corporate Data",
+                        "url": "http://netcraft.co.il"
+                    }
+                ]
+            }
+        ],
+        "tabsList": [
+            {
+                "options": {
+                    "rowLabel": "Report"
+                }
+            }, {
+                "options": {
+                    "url": "http://www.paulirish.com/"
+                }
+            }, {
+                "options": {
+                    "rowLabel": "Folder"
+                }
+            }, {
+                "options": {
+                    "url": "http://addyosmani.com/"
+                }
+            }
+        ]
+    }
+
+    ajaxGetMenuNotifications(res);
     /*var xhr = new XMLHttpRequest();
     
     xhr.open('GET', './data/config.json');
